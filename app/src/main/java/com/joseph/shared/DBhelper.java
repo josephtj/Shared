@@ -7,23 +7,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-
 public class DBhelper extends SQLiteOpenHelper {
-    //Define the name of the database here called userdata.db
-    public static final String DATABASE_NAME = "userdata.db";
 
-
-    public DBhelper(@Nullable Context context)
-    {
-        super(context, DATABASE_NAME, null, 1);
+    //Define the name of the database here called serdata.db
+    public DBhelper(@Nullable Context context) {
+        super(context, "serdata.db", null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase DB)
-    {
-//Creating table and its attributes
-        DB.execSQL("create Table userdetails(motherName Text,childName Text, NRC INT primary key)");
+    public void onCreate(SQLiteDatabase DB) {
+
+        //Creating table and its attributes
+        DB.execSQL("create Table Userdetails(name Text primary key,contact Text,dob Text)");
     }
 
     @Override
@@ -33,23 +28,25 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     // method for inserting data into the database
-    public  Boolean insert_data (String motherName, String childName, String NRC){
+    public  Boolean insertdata (String name, String contact, String dob){
         SQLiteDatabase DB = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name",motherName);
-        values.put("contact",childName);
-        values.put("dob",NRC);
-        getdata();
-        long result = DB.insert("userdetails",null, values);
-        return result != -1;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name",name);
+        contentValues.put("contact",contact);
+        contentValues.put("dob",dob);
+        long result = DB.insert("Userdetails",null, contentValues);
+        if(result == -1){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 
-    //Retrieving data method
-    public Cursor getdata(){
+    public  Cursor getdata(){
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("select * from Userdetails",null);
-        cursor.moveToFirst();
         return cursor;
     }
 

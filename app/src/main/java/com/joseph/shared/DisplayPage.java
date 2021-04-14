@@ -32,9 +32,9 @@ public class DisplayPage extends AppCompatActivity {
         viewData();
 
 
-
     }
 
+ //method for displaying stored data
     private void viewData() {
         Cursor cursor = DB.getdata();
         if(cursor.getCount()==0){
@@ -48,8 +48,6 @@ public class DisplayPage extends AppCompatActivity {
                 listItem.add("Mothers Name:" + "\t" + cursor.getString(0));
                 listItem.add("Child`s Name:" + "\t" + cursor.getString(1));
                 listItem.add("Mothers NRC:" + "\t" + cursor.getString(2)+"\n\n");
-
-
 
 
             }
